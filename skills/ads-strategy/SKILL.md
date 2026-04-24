@@ -522,13 +522,17 @@ Ad_Readiness_Score = (Audience * 0.25) + (Creative * 0.20) + (Funnel * 0.20) + (
 
 ## Output Report
 
-Generate a file called `ADS-STRATEGY-[CompanyName].md` where `[CompanyName]` is the cleaned company name (spaces replaced with hyphens, lowercase):
+**Before generating the report, load `STYLE.md` at the repository root.** Every rule in that file applies. In particular: translate every acronym on first use, include a glossary, use DD/MM/YYYY dates, use R1,000.00 for currency, never use em or en dashes, never use forbidden phrases listed in STYLE.md. Use South African English spelling throughout.
+
+Generate a file called `ADS-STRATEGY-[CompanyName].md` where `[CompanyName]` is the cleaned company name (spaces replaced with hyphens, lowercase). Use the following template. Replace every `[X]` placeholder with real content. Write like a human, not like a template.
 
 ```markdown
-# Ad Strategy Report
+# Advertising Strategy Report
 ## [Company Name]
-### Strategy Date: [Date]
-### URL: [URL]
+
+**Report date:** [DD/MM/YYYY]
+**URL:** [URL]
+**Prepared for:** [Site owner / client name]
 
 ---
 
@@ -536,33 +540,96 @@ Generate a file called `ADS-STRATEGY-[CompanyName].md` where `[CompanyName]` is 
 
 **Ad Readiness Score: [X]/100 ([Grade])**
 
-[3-5 sentence executive summary covering: current ad readiness state, business type classification, biggest strength, biggest vulnerability, and the single most important action to take before launching ads. This paragraph should give a busy executive everything they need in 30 seconds.]
+[Write 2 to 4 short paragraphs, in plain English. Cover: what the business should do, why, what the numbers say, and the single most important thing to fix. A reader outside advertising should get the full picture in 30 seconds. No acronyms without explanation. No corporate filler.]
 
-**Business Type:** [Detected Type]
+**Business type:** [Detected type]
 **Industry:** [Industry]
-**Recommended Platforms:** [Platform list]
-**Recommended Starting Budget:** [$X/month]
-**Projected ROAS:** [X.Xx]
+**Recommended platforms:** [Platform list]
+**Recommended starting budget:** R[X] per month
+**Realistic target ROAS (month 3 and beyond):** [X.X]x
 
 ---
 
-## Score Dashboard
+## Score Breakdown
 
-| Category | Score | Weight | Weighted | Status |
-|---|---|---|---|---|
-| Audience Clarity | [X]/100 | 25% | [X] | [Excellent/Strong/Adequate/Weak/Critical] |
-| Creative Quality | [X]/100 | 20% | [X] | [Excellent/Strong/Adequate/Weak/Critical] |
-| Funnel Architecture | [X]/100 | 20% | [X] | [Excellent/Strong/Adequate/Weak/Critical] |
-| Competitive Position | [X]/100 | 15% | [X] | [Excellent/Strong/Adequate/Weak/Critical] |
-| Budget Efficiency | [X]/100 | 20% | [X] | [Excellent/Strong/Adequate/Weak/Critical] |
-| **Ad Readiness Score** | | **100%** | **[X]/100** | **[Grade]** |
+The overall [X]/100 score is made up of five weighted categories.
 
-### Status Key
-- **Excellent (90-100):** Best-in-class, no immediate action needed
-- **Strong (75-89):** Above average, minor optimizations available
-- **Adequate (60-74):** Functional but clear room for improvement
-- **Weak (40-59):** Below average, needs focused attention
-- **Critical (0-39):** Major issues that will undermine ad performance
+| Category | Score | Rating | What this measures |
+|---|---|---|---|
+| Audience clarity | [X]/100 | [Strong/Adequate/Weak] | How well we know who we are selling to, and how clearly we can target them. |
+| Creative quality | [X]/100 | [Rating] | The quality of the ad copy, hooks, and creative angles available. |
+| Campaign architecture | [X]/100 | [Rating] | How well the ad plan moves a stranger from first contact to a purchase, then back for a second one. |
+| Competitive position | [X]/100 | [Rating] | How the brand stacks up against competitors in the same market. |
+| Budget efficiency | [X]/100 | [Rating] | How much work each rand of ad spend has to do. |
+
+### Rating key
+- **Excellent (90-100):** Best in class. No immediate action needed.
+- **Strong (75-89):** Above average. Minor tweaks available.
+- **Adequate (60-74):** Functional. Clear room for improvement.
+- **Weak (40-59):** Below average. Needs focused attention.
+- **Critical (0-39):** Major issues that will undermine ad performance.
+
+---
+
+## Critical Findings
+
+The two or three biggest issues, with evidence. Each one is a named problem, not a vague concern.
+
+### 1. [Name the issue in plain English]
+[Short paragraph explaining the issue and why it matters. Include specific evidence: a percentage, a rand value, a date, a specific observation from the site or the data. End with one sentence on what to do about it.]
+
+### 2. [Name the issue]
+[Same structure.]
+
+### 3. [Name the issue, if there is a third]
+[Same structure.]
+
+---
+
+## Quick Wins (Start This Week)
+
+Five actions that require minimal effort but lift performance quickly. None of them should take more than a day to set up.
+
+| # | Action | Why it matters |
+|---|---|---|
+| 1 | [Specific action, in plain language] | [The concrete benefit, with numbers where possible] |
+| 2 | [Action] | [Benefit] |
+| 3 | [Action] | [Benefit] |
+| 4 | [Action] | [Benefit] |
+| 5 | [Action] | [Benefit] |
+
+---
+
+## Glossary
+
+Plain-English explanations of the terms used in this report. Refer to this whenever a term trips you up.
+
+| Term | What it means |
+|---|---|
+| ROAS (Return on Ad Spend) | What you get back in sales for every rand spent on ads. A 4x ROAS means you spent R1.00 and earned R4.00. |
+| CPA (Cost Per Acquisition) | What it costs in ads to win one paying customer. |
+| AOV (Average Order Value) | The average basket size across the shop. |
+| LTV (Lifetime Value) | What a customer is worth across all their purchases, not just the first. |
+| CPM (Cost Per 1,000 Impressions) | What it costs to show the ad to 1,000 people. |
+| CPC (Cost Per Click) | What it costs each time someone clicks the ad. |
+| CTR (Click Through Rate) | The percentage of people who see the ad and click it. |
+| Quality Score | Google's 1 to 10 rating of your search ads. Higher scores mean cheaper clicks and better positions. |
+| Funnel | The path a shopper takes from never hearing of you to buying. Three stages: Top (TOFU, strangers), Middle (MOFU, browsing), Bottom (BOFU, ready to buy). |
+| Prospecting | Ads shown to people who have never seen the brand before. |
+| Retargeting | Ads shown to people who already visited the site. |
+| Lookalike audience | An audience built by Facebook or Google that looks similar to existing buyers. |
+| Custom Audience / Customer Match | Uploading the customer list to a platform so you can target, exclude, or find similar people. |
+| Performance Max (PMax) | A Google campaign that runs across Search, Shopping, YouTube and Gmail, automated. |
+| Responsive Search Ads (RSA) | Google text ads where you supply headlines and descriptions and Google mixes and matches. |
+| Dynamic Product Ads | Ads that automatically show a shopper the exact product they looked at. |
+| UGC (User Generated Content) | Content that looks like a customer made it, not a brand. |
+| Pixel / Conversions API (CAPI) | Tracking code on the site. The CAPI (server-side) version is more accurate than the old browser pixel. |
+| BFCM | Black Friday and Cyber Monday. |
+| BNPL | Buy Now Pay Later (PayJustNow, PayFlex, Mobicred, Payshap). |
+| PAS / AIDA / BAB | Three copywriting structures. PAS is Problem, Agitate, Solution. AIDA is Attention, Interest, Desire, Action. BAB is Before, After, Bridge. |
+| GTIN | The unique barcode number on every product. Required by Google Shopping. |
+
+[Add any other terms that appear in this specific report. Follow the same plain-English pattern.]
 
 ---
 
@@ -572,268 +639,325 @@ Generate a file called `ADS-STRATEGY-[CompanyName].md` where `[CompanyName]` is 
 |---|---|
 | Company | [Name] |
 | URL | [URL] |
-| Business Type | [Type] |
+| Business type | [Type] |
 | Industry | [Industry] |
-| Products/Services | [List] |
-| Pricing Model | [Model] |
-| Value Proposition | [Tagline] |
-| Target Geography | [Location] |
-| Primary Conversion Action | [Purchase/Demo/Call/Form/Sign-up] |
+| Products or services | [List] |
+| Pricing model | [Model] |
+| Value proposition | [Tagline] |
+| Target geography | [Location] |
+| Primary conversion action | [Purchase/demo/call/form/sign-up] |
 
 ---
 
-## Audience Personas
+## Audience Analysis
 
-[Full output from the Audience Research Agent]
+**Audience clarity score: [X]/100**
 
-### Persona Overview
+[Short lead-in paragraph describing the audience in human terms. Who is the ideal customer and what are they trying to do?]
 
-| # | Persona | Age | Income | Platform | Relevance | Funnel Stage |
-|---|---|---|---|---|---|---|
-| 1 | [Name] | [Range] | [Range] | [Primary] | [1-5] | [TOFU/MOFU/BOFU] |
-| 2 | [Name] | [Range] | [Range] | [Primary] | [1-5] | [TOFU/MOFU/BOFU] |
-| 3 | [Name] | [Range] | [Range] | [Primary] | [1-5] | [TOFU/MOFU/BOFU] |
-| 4 | [Name] | [Range] | [Range] | [Primary] | [1-5] | [TOFU/MOFU/BOFU] |
-| 5 | [Name] | [Range] | [Range] | [Primary] | [1-5] | [TOFU/MOFU/BOFU] |
+### The personas at a glance
 
-### Detailed Personas
+| # | Persona | Who they are | Platform mix | Priority |
+|---|---|---|---|---|
+| 1 | [Name] | [Age, gender split, household income, location] | [Facebook 60% / Google 30% / TikTok 10%] | [1 to 5] |
+| 2 | [Name] | [Details] | [Platform mix] | [1 to 5] |
+| 3 | [Name] | [Details] | [Platform mix] | [1 to 5] |
 
-[Each persona with full demographics, psychographics, pain points, buying triggers, objections, targeting parameters per platform]
+### Top persona deep dive: [Name]
 
-### Negative Audiences (Who NOT to Target)
+[2 to 3 short paragraphs explaining who this person is, what they need, and when they buy. Write in human terms, not bullet-point CV format.]
 
-[Exclusion list with rationale]
+**What they care about:**
+- [Pain point or goal 1]
+- [Pain point or goal 2]
+- [Pain point or goal 3]
 
-### Audience Key Insight
-> [One-sentence biggest finding from the Audience agent]
+**When they buy:** [Triggers — paydays, seasons, life events, stock-outs, etc.]
+
+**Recommended budget share:** R[X] per month ([X]% of total)
+
+### Who NOT to target
+
+[Short list of audiences to exclude, with rationale. One sentence each.]
+
+### Key audience insight
+> [One sentence. The single biggest thing the reader should take from this section, written plainly.]
+
+---
+
+## Creative Direction
+
+**Creative quality score: [X]/100**
+
+[Short lead-in. What is the overall creative approach?]
+
+### Three core messaging angles
+
+| Angle | Territory | How to use it |
+|---|---|---|
+| Pain-point | [One-line framing] | [When and where to use it] |
+| Aspiration | [Framing] | [Use] |
+| Social proof | [Framing] | [Use] |
+
+### Top 5 scroll-stopping hooks
+
+A hook is the first line of the ad. If it does not stop the scroll, nothing else matters.
+
+| # | Hook | Type | Best placement |
+|---|---|---|---|
+| 1 | "[Hook text]" | [Pain / curiosity / social proof / urgency] | [Platform and format] |
+| 2 | "[Hook text]" | [Type] | [Placement] |
+| 3 | "[Hook text]" | [Type] | [Placement] |
+| 4 | "[Hook text]" | [Type] | [Placement] |
+| 5 | "[Hook text]" | [Type] | [Placement] |
+
+### First creative to test
+
+[Short paragraph explaining the single first creative the business should launch. Say which angle, which format, which platform, and why this one first.]
+
+### What is ready to test on day one
+
+[Brief bulleted summary of the copy frameworks, Google RSA sets, and creator angles available.]
+
+### Key creative insight
+> [One sentence in plain English.]
 
 ---
 
 ## Campaign Architecture
 
-[Full output from the Funnel Architecture Agent]
+**Campaign architecture score: [X]/100**
 
-### Funnel Overview
+[Short lead-in. The campaign architecture is how the ad plan moves a stranger from first contact to a purchase and back again. Explain the overall logic in one paragraph.]
 
-```
-TOFU (Awareness) ──> MOFU (Consideration) ──> BOFU (Conversion) ──> Retargeting (Recovery)
-     [X]%                  [X]%                    [X]%                   [X]%
-```
+### Budget split by buying stage
 
-### TOFU -- Awareness Stage
-[Objectives, audiences, ad formats, platforms, KPIs, budget %]
-
-### MOFU -- Consideration Stage
-[Objectives, audiences, ad formats, platforms, KPIs, budget %]
-
-### BOFU -- Conversion Stage
-[Objectives, audiences, ad formats, platforms, KPIs, budget %]
-
-### Retargeting -- Recovery & Loyalty
-[Windows, segmentation, creative rotation, frequency caps, cross-sell sequences]
-
-### Conversion Path Map
-```
-[Ad Click] -> [Landing Page] -> [Micro-Conversion] -> [Primary Conversion]
-```
-
-### Pixel & Tracking Strategy
-[Events to track, custom audiences, lookalike recommendations]
-
-### Funnel Key Insight
-> [One-sentence biggest finding from the Funnel agent]
-
----
-
-## Creative Strategy
-
-[Full output from the Creative Strategy Agent]
-
-### Core Messaging Angles
-
-| # | Angle | Description | Best For |
-|---|---|---|---|
-| 1 | Pain-Point | [Description] | [Platform/Stage] |
-| 2 | Aspiration | [Description] | [Platform/Stage] |
-| 3 | Social Proof | [Description] | [Platform/Stage] |
-
-### Top 10 Scroll-Stopping Hooks
-
-| # | Hook | Type | Platform | Psychology |
+| Stage | Who this reaches | % of budget | R / month | Purpose |
 |---|---|---|---|---|
-| 1 | [Hook text] | [Pain/Curiosity/Proof/Urgency] | [Platform] | [Why it works] |
-| 2 | [Hook text] | [Type] | [Platform] | [Why it works] |
-| ... | ... | ... | ... | ... |
+| Top (TOFU) | Strangers who have never heard of the brand | [X]% | R[X] | Awareness, introduce the brand |
+| Middle (MOFU) | People who know the brand but have not bought | [X]% | R[X] | Consideration, move them toward a purchase |
+| Bottom (BOFU) | People ready to buy now | [X]% | R[X] | Close the sale |
+| Retargeting | Recent visitors and existing customers | [X]% | R[X] | Bring back browsers, keep customers loyal |
 
-### Platform-Specific Ad Copy
+### Campaign breakdown
 
-#### Meta (Facebook / Instagram)
-[3 ad copy variations with primary text, headline, description, CTA]
-
-#### Google Ads (Search)
-[3 responsive search ad sets with headlines and descriptions]
-
-#### LinkedIn
-[2 ad copy variations]
-
-### Creative Concepts
-
-#### Concept 1: Static Image Ad
-[Visual description, text overlay, color direction, platform specs]
-
-#### Concept 2: Short Video Ad (15s)
-[Shot-by-shot script, voiceover, on-screen text, music direction]
-
-#### Concept 3: UGC-Style Ad
-[Creator script template, talking points, B-roll suggestions]
-
-### Creative Key Insight
-> [One-sentence biggest finding from the Creative agent]
-
----
-
-## Competitive Landscape
-
-[Full output from the Competitive Intelligence Agent]
-
-### Competitor Overview
-
-| Competitor | Positioning | Ad Presence | Strongest Platform | Key Weakness |
-|---|---|---|---|---|
-| [Name] | [Value prop] | [Active/Moderate/None] | [Platform] | [Gap] |
-| [Name] | [Value prop] | [Active/Moderate/None] | [Platform] | [Gap] |
-| [Name] | [Value prop] | [Active/Moderate/None] | [Platform] | [Gap] |
-
-### Competitive Gap Analysis
-
-| Gap | Opportunity | How to Exploit |
+| Campaign | What it does | Monthly |
 |---|---|---|
-| [Gap] | [What it means] | [Specific ad strategy] |
-| [Gap] | [What it means] | [Specific ad strategy] |
-| [Gap] | [What it means] | [Specific ad strategy] |
+| [Campaign name] | [Plain-English description, not just a platform name] | R[X] |
+| [Campaign name] | [Description] | R[X] |
+| [Campaign name] | [Description] | R[X] |
+| **Total** | **All stages, all platforms** | **R[X]** |
 
-### "Beat the Competition" Strategy
-[3 positioning angles, counter-messaging hooks, platform opportunities, offer strategies]
+### How the shopper moves from ad to purchase
 
-### Competitive Key Insight
-> [One-sentence biggest finding from the Competitive agent]
+[Plain-English description of the conversion path. What does the shopper see first, what do they click, where do they land, what do they do next? One short paragraph.]
+
+### Tracking and audience setup
+
+[What tracking needs to be in place: Meta Pixel plus Conversions API, Google Enhanced Conversions, TikTok Events API. What custom audiences and lookalikes to build. Written in full sentences, not jargon.]
+
+### Key architecture insight
+> [One sentence in plain English.]
 
 ---
 
-## Budget Allocation & ROI Projections
+## Competitive Positioning
 
-[Full output from the Budget & ROI Agent]
+**Competitive position score: [X]/100**
 
-### Industry Benchmarks
+[Short lead-in. Where does the brand sit in the market, and what is the biggest competitive challenge?]
 
-| Metric | [Platform 1] | [Platform 2] | [Platform 3] | Industry Avg |
-|---|---|---|---|---|
-| CPM | $[X] | $[X] | $[X] | $[X] |
-| CPC | $[X] | $[X] | $[X] | $[X] |
-| CPA | $[X] | $[X] | $[X] | $[X] |
-| Conv. Rate | [X]% | [X]% | [X]% | [X]% |
-| Avg. ROAS | [X.Xx] | [X.Xx] | [X.Xx] | [X.Xx] |
+### The competitors
 
-### Budget Scenarios
+| Competitor | Threat level | Their strength | Their weakness |
+|---|---|---|---|
+| [Name] | [Critical / High / Medium] | [Strength in plain words] | [Weakness] |
+| [Name] | [Level] | [Strength] | [Weakness] |
+| [Name] | [Level] | [Strength] | [Weakness] |
 
-#### Starter ($1,000-$2,000/mo)
-| Platform | Allocation | Monthly Spend | Est. Clicks | Est. Conversions |
-|---|---|---|---|---|
-| [Platform] | [X]% | $[X] | [X] | [X] |
-| **Total** | **100%** | **$[X]** | **[X]** | **[X]** |
+### Where the gaps are
 
-#### Growth ($3,000-$5,000/mo)
-[Same table format with expanded platform mix]
+| Gap | What it means | How to exploit it |
+|---|---|---|
+| [Gap] | [Explanation] | [Specific action] |
+| [Gap] | [Explanation] | [Specific action] |
+| [Gap] | [Explanation] | [Specific action] |
 
-#### Scale ($7,000-$10,000+/mo)
-[Same table format with full platform activation]
+### How to win
 
-### Break-Even Analysis
+[2 to 3 short paragraphs on positioning angles, counter-messaging hooks, and offer strategies. Written as if explaining to the business owner, not writing a pitch deck.]
 
-| Metric | Value |
+### Key competitive insight
+> [One sentence in plain English.]
+
+---
+
+## Budget and Return on Investment
+
+**Budget efficiency score: [X]/100**
+
+### Platform split (R[X] per month)
+
+| Platform | Share | Monthly |
+|---|---|---|
+| Google (Shopping + Performance Max + Search) | [X]% | R[X] |
+| Facebook / Instagram (Advantage+, retargeting, prospecting) | [X]% | R[X] |
+| TikTok (creator-led tests) | [X]% | R[X] |
+
+### The underlying maths
+
+This is where profitability depends on repeat customers and Black Friday, not on cheaper clicks.
+
+| Metric | Value | What it means |
+|---|---|---|
+| Average order value (assumed) | R[X] | The typical basket size |
+| Gross margin (assumed) | [X]% | Percentage of each sale left after the cost of the goods |
+| Break-even CPA on first order only | R[X] | The most you can spend in ads to win a new customer and break even on their first order |
+| Break-even ROAS on first order only | [X.X]x | Sales per R1.00 of ads needed to break even on the first sale alone |
+| Break-even CPA including repeat custom | R[X] | Factoring in repeat purchases, what you can afford to spend per new customer |
+| Break-even ROAS including repeat custom | [X.X]x | Factoring in repeat purchases, the break-even return |
+| Realistic target ROAS (month 3 and beyond) | [X.X]x to [X.X]x | What a well-run account should deliver |
+| Realistic target CPA (month 3 and beyond) | R[X] to R[X] | What it should cost to win a new customer by month 3 |
+
+### Launch phase projection (first 90 days)
+
+The account will not perform at target from day one. Month 1 is about getting the tracking right and learning what converts. Month 2 is about killing the losers. Month 3 is when the returns catch up.
+
+| | Month 1 | Month 2 | Month 3 |
+|---|---|---|---|
+| Spend | R[X] | R[X] | R[X] |
+| Blended ROAS | [X.X]x to [X.X]x | [X.X]x to [X.X]x | [X.X]x to [X.X]x |
+| Blended CPA | R[X] to R[X] | R[X] to R[X] | R[X] to R[X] |
+| Focus | Testing and tracking | Kill losers, scale winners | Scale and optimise |
+
+### Key budget insight
+> [One sentence. Usually the point that profitability depends on repeat custom, the email list, and BFCM, not on cheaper clicks.]
+
+---
+
+## Launch to Year-End Roadmap
+
+Three distinct phases, not a single 90-day sprint. Phase 1 takes the business live. Phase 2 optimises what works and quietly builds the audience. Phase 3 executes on the biggest trading window of the year. Each phase has its own dates, priorities, and measures of success.
+
+**IMPORTANT:** Use real calendar dates based on the report date. If the report date is in April 2026, Phase 1 Week 1 begins in the week of the report date. Never use abstract "Month 3" language that could drift across a calendar year. Be honest about when things actually happen.
+
+### PHASE 1: Launch ([start date] to [end of month 3])
+
+Get the tracking right, get the ads live, cut losers, scale winners, consolidate.
+
+#### Week 1: Red zone — foundations ([dates])
+
+Nothing works without this week. The tracking is the foundation.
+
+- **Install tracking on every platform.** Meta Pixel plus Conversions API (server-side), GA4, Google Enhanced Conversions, TikTok Pixel plus Events API. The server-side versions are critical because iPhone changes have killed roughly 20% of the old browser pixel signals.
+- **Install the WooCommerce Conversions API Gateway plugin** so server data feeds back to Facebook correctly.
+- **Set up conversion events and custom audiences.** Tell each ad platform what counts as a purchase, a cart add, a product view. Upload the customer list.
+- **Build the Google Shopping feed properly.** Every product needs its barcode number (GTIN). Fix anything flagged in the Google Merchant Center dashboard.
+- **Launch the defensive brand campaign on Google.** Start bidding on the brand name immediately.
+- **Spend R[X] in week 1** across Google Shopping, brand-name Google Search, and Facebook retargeting.
+
+#### Weeks 2 to 4: Amber zone — launch and learn ([dates])
+
+- **Launch Google Performance Max** as a retail asset group.
+- **Launch Facebook Advantage+ Shopping** with four different creative versions so the platform has something to test.
+- **Start A/B testing ad copy** using the PAS, AIDA and BAB frameworks (see glossary).
+- **Add non-branded Google Search** targeting category-level queries, not just the brand name.
+- **Launch 6 TikTok creator Spark Ads** using UGC-style content.
+- **End of month 1: full review.** Add 20% budget to winners. Cut anything delivering under 50% of target return.
+
+#### Month 2: Blue zone — cut and scale ([dates])
+
+- **Cut underperforming Facebook ads** with a click-through rate under 0.6% after 10,000 impressions.
+- **Cut weak Google Search keywords** with a Quality Score under 5 after 500 impressions.
+- **Scale the top two Shopping product clusters +20%.**
+- **Scale Facebook 3-day cart-abandonment retargeting +25%.**
+- **Launch Facebook lookalike audiences** built from existing buyers, at 1%, 2% and 3% match tightness.
+- **Run the first landing-page A/B test.** Product page versus a dedicated category landing page.
+
+#### Month 3: Green zone — consolidate ([dates])
+
+- **Scale the winners again (+20%).**
+- **Deep search query report review.** Mine the last 60 days for new keywords worth bidding on and negatives worth blocking.
+- **Roll out retargeting ladders on Facebook.** Different messages at 3, 7, 14 and 30 days since last visit.
+- **Second Facebook creative refresh** (6 to 8 new assets) before fatigue sets in.
+- **Begin in-house UGC production.** Staff filming real products in real homes, for BFCM pipeline.
+
+### PHASE 2: Steady State ([dates — 3 months after launch])
+
+Optimise what works. Grow the email and WhatsApp list. Lay the BFCM foundations.
+
+#### [Month 4 name, e.g. "July 2026"]
+
+- **Launch 3 to 5 creator partnerships** in the 20,000 to 100,000 follower tier. Measure direct sales plus halo effect on branded search.
+- **Second landing page A/B test.** Product-specific landers versus category pages.
+- **Start building the BFCM creative library.** Target 12 or more finished assets by the end of Phase 2.
+- **Test vernacular creative** on a small budget for under-served audiences.
+- **Review the retention stack.** Email list growth rate, WhatsApp opt-ins, loyalty credit uptake. Fix now, not in October.
+- **First supplier conversations for BFCM stock.**
+
+#### [Month 5]
+
+- Continue creator partnership measurement.
+- BFCM creative library build continues.
+- Identify top underperforming product categories. Decide whether to reposition, re-price, or pull from Shopping.
+
+#### [Month 6]
+
+- **Finalise the BFCM campaign structure.** Separate campaign groups so BFCM spend does not contaminate regular-run learning.
+- **Complete the BFCM creative library.** All assets finished, approved, ready to schedule.
+- **Audit the tracking one more time.** Signal quality must be 95% or better before BFCM budgets hit.
+- **Full-account efficiency review.** Cut structurally underperforming campaigns before budgets rise.
+- **Pre-commit BFCM budget lifts with Finance.**
+
+### PHASE 3: Black Friday Build ([October to December])
+
+The year's biggest trading window. BFCM and the December clearance carry annual profitability. Under-spend or under-stock here and the year does not work.
+
+#### October
+
+- Last pre-BFCM creative refresh. Shift Facebook from 70/30 image-to-video to 30/70.
+- Build dedicated BFCM landing pages with countdown timers.
+- Launch warm-up teaser campaigns from mid-October at low spend.
+- Stock confirmation locked by 20/10. No late changes.
+- Final tracking audit.
+
+#### November
+
+- First half: normal run-rate with BFCM teaser creative rotated in.
+- From 15/11: warm-up campaigns launch properly. Budgets up 25% to 30%.
+- 21/11 to 26/11: budgets up another 40%. Cost per 1,000 impressions will double or quadruple. Plan for it.
+- 27/11 (Black Friday) and 30/11 (Cyber Monday): peak execution. Well-run accounts can return R10.00 to R18.00 per R1.00 spent. Monitor hourly.
+
+#### December
+
+- 01/12 to 15/12: BFCM wind-down. Taper gradually, do not cut overnight.
+- Mid-December: swap creative to gifting themes.
+- 20/12 to 25/12: last-minute gifting push.
+- 26/12 (Boxing Day): clearance peak.
+- End of month: full review and plan next year.
+
+---
+
+## Critical Flags and Open Items
+
+Things that must be resolved inside the first month, because they affect the accuracy of the whole plan.
+
+| Open item | Why it matters |
 |---|---|
-| Estimated AOV / Deal Size | $[X] |
-| Break-Even CPA | $[X] |
-| Break-Even ROAS | [X.Xx] |
-| Months to Profitability (Starter) | [X] |
-| Months to Profitability (Growth) | [X] |
-
-### Budget Key Insight
-> [One-sentence biggest finding from the Budget agent]
-
----
-
-## 90-Day Implementation Plan
-
-### Month 1: Foundation & Testing (Days 1-30)
-
-**Week 1: Setup**
-- [ ] Install tracking pixels on all platforms (Meta, Google, LinkedIn)
-- [ ] Set up conversion events and custom audiences
-- [ ] Create landing pages for each funnel stage
-- [ ] Build initial ad creative (3-5 variations per platform)
-
-**Week 2: Launch**
-- [ ] Launch TOFU campaigns on primary platform
-- [ ] Launch BOFU retargeting campaigns
-- [ ] Begin A/B testing ad copy and creative
-- [ ] Set up daily performance monitoring
-
-**Week 3: Optimize**
-- [ ] Review first week data -- pause underperforming ads
-- [ ] Adjust audience targeting based on early signals
-- [ ] Launch second platform if budget allows
-- [ ] Test new hooks and creative angles
-
-**Week 4: Analyze**
-- [ ] Full performance review of Month 1
-- [ ] Calculate actual CPC, CPA, ROAS vs projections
-- [ ] Identify winning ads, audiences, and platforms
-- [ ] Plan Month 2 optimizations
-
-### Month 2: Optimization & Expansion (Days 31-60)
-
-- [ ] Scale winning campaigns by 20-30% budget increase
-- [ ] Kill losing campaigns and reallocate budget
-- [ ] Launch MOFU campaigns for warm audience nurturing
-- [ ] Expand to secondary platform
-- [ ] Create new creative based on Month 1 learnings
-- [ ] Build lookalike audiences from converters
-- [ ] Implement advanced retargeting sequences
-- [ ] Test landing page variations
-
-### Month 3: Scaling & Automation (Days 61-90)
-
-- [ ] Increase budget to Growth tier if ROAS targets are met
-- [ ] Activate full funnel across 2-3 platforms
-- [ ] Implement automated rules for bid/budget management
-- [ ] Launch dynamic creative optimization (DCO) campaigns
-- [ ] Build customer LTV analysis from early cohorts
-- [ ] Create cross-sell/upsell retargeting campaigns
-- [ ] Document winning formulas for repeatable scaling
-- [ ] Set 90-day review meeting to plan next quarter
-
----
-
-## Quick Wins (Start This Week)
-
-These 5 actions require minimal effort but will significantly improve ad readiness:
-
-1. **[Specific action]** -- [Why it matters and expected impact]
-2. **[Specific action]** -- [Why it matters and expected impact]
-3. **[Specific action]** -- [Why it matters and expected impact]
-4. **[Specific action]** -- [Why it matters and expected impact]
-5. **[Specific action]** -- [Why it matters and expected impact]
+| Confirm the real numbers: AOV, repeat rate, gross margin per category | The whole model runs on estimates. Pull the last 90 days of data and refine before full spend. |
+| Install server-side tracking | Without it, roughly 20% of signals from iPhones alone are lost. |
+| Stock availability feed to Google Shopping | Out-of-stock ads waste spend and drive customer complaints. |
+| [Add business-specific flags here] | [Rationale] |
 
 ---
 
 ## Next Steps
 
-| What to Do Next | Skill | Command |
+| What to do next | Skill | Command |
 |---|---|---|
 | Deep-dive audience research | Audience Persona Builder | `/ads audience [url]` |
 | Generate full ad copy sets | Ad Copy Generator | `/ads copy [platform]` |
-| Get 20+ scroll-stopping hooks | Hook Generator | `/ads hooks` |
+| Get 20-plus scroll-stopping hooks | Hook Generator | `/ads hooks` |
 | Build complete funnel blueprint | Funnel Architect | `/ads funnel [url]` |
 | Full competitor ad analysis | Competitive Intelligence | `/ads competitors [url]` |
 | Detailed budget projections | Budget Allocator | `/ads budget [amount]` |
@@ -842,8 +966,6 @@ These 5 actions require minimal effort but will significantly improve ad readine
 | A/B testing plan | Testing Plan Builder | `/ads testing [campaign]` |
 | Generate PDF report | PDF Report Generator | `/ads report-pdf` |
 ```
-
----
 
 ## Terminal Output
 
