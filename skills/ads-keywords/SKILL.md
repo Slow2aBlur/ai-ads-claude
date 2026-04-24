@@ -3,6 +3,14 @@ name: Google Ads Keyword Strategy
 description: Builds a complete Google Ads keyword strategy with search intent mapping, ad group structure, match type recommendations, negative keyword lists, estimated CPC ranges, Quality Score optimization, and ready-to-implement campaign architecture
 ---
 
+## Voice and Style
+
+**Before generating any output, load `STYLE.md` at the repository root and apply every rule in it.**
+
+`STYLE.md` defines the writing voice, acronym translation rules, glossary requirement, date and currency formatting (DD/MM/YYYY and R1,000.00), forbidden phrases, and visual palette that all Daily Discounts reports must follow. Rules in `STYLE.md` override any conflicting guidance in this file.
+
+---
+
 # Google Ads Keyword Strategy
 
 ## Skill Purpose

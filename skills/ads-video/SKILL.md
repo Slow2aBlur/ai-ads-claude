@@ -3,6 +3,14 @@ name: Video Ad Script Writer
 description: Generates complete video ad scripts for 15s, 30s, and 60s formats with shot-by-shot breakdowns, voiceover scripts, on-screen text, B-roll suggestions, music direction, storyboard outlines, and three proven video frameworks
 ---
 
+## Voice and Style
+
+**Before generating any output, load `STYLE.md` at the repository root and apply every rule in it.**
+
+`STYLE.md` defines the writing voice, acronym translation rules, glossary requirement, date and currency formatting (DD/MM/YYYY and R1,000.00), forbidden phrases, and visual palette that all Daily Discounts reports must follow. Rules in `STYLE.md` override any conflicting guidance in this file.
+
+---
+
 # Video Ad Script Writer
 
 ## Skill Purpose

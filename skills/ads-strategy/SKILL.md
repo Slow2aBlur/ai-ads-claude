@@ -3,6 +3,14 @@ name: ads-strategy
 description: Full Ad Strategy Orchestrator. Launches 5 parallel subagents to build a complete advertising strategy from a single URL — audience personas, creative concepts, funnel architecture, competitive intelligence, and budget allocation. Produces a composite Ad Readiness Score (0-100) with a unified, client-ready strategy report.
 ---
 
+## Voice and Style
+
+**Before generating any output, load `STYLE.md` at the repository root and apply every rule in it.**
+
+`STYLE.md` defines the writing voice, acronym translation rules, glossary requirement, date and currency formatting (DD/MM/YYYY and R1,000.00), forbidden phrases, and visual palette that all Daily Discounts reports must follow. Rules in `STYLE.md` override any conflicting guidance in this file.
+
+---
+
 # Full Ad Strategy Orchestrator
 
 ## Skill Purpose

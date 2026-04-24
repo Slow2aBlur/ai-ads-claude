@@ -3,6 +3,14 @@ name: Scroll-Stopping Hook Generator
 description: Generates 20+ scroll-stopping ad hooks organized by psychological angle (pain, curiosity, social proof, contrarian, urgency) with platform-specific formatting, A/B variations, and psychology breakdowns
 ---
 
+## Voice and Style
+
+**Before generating any output, load `STYLE.md` at the repository root and apply every rule in it.**
+
+`STYLE.md` defines the writing voice, acronym translation rules, glossary requirement, date and currency formatting (DD/MM/YYYY and R1,000.00), forbidden phrases, and visual palette that all Daily Discounts reports must follow. Rules in `STYLE.md` override any conflicting guidance in this file.
+
+---
+
 # Scroll-Stopping Hook Generator
 
 ## Skill Purpose

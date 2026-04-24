@@ -3,6 +3,14 @@ name: Audience Persona Builder
 description: Builds 5-7 detailed audience personas from a URL with demographics, psychographics, pain points, buying triggers, platform-specific targeting parameters, persona scoring, and negative audiences
 ---
 
+## Voice and Style
+
+**Before generating any output, load `STYLE.md` at the repository root and apply every rule in it.**
+
+`STYLE.md` defines the writing voice, acronym translation rules, glossary requirement, date and currency formatting (DD/MM/YYYY and R1,000.00), forbidden phrases, and visual palette that all Daily Discounts reports must follow. Rules in `STYLE.md` override any conflicting guidance in this file.
+
+---
+
 # Audience Persona Builder
 
 ## Skill Purpose
