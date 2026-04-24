@@ -33,34 +33,38 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
-# Color palette
+# Color palette — Daily Discounts brand
 # ---------------------------------------------------------------------------
+# All colours come from the DD brand style guide. Brand Teal is the primary
+# colour used for headers, table header rows, and key callouts. Signal Orange
+# is used sparingly for highlights and alerts only. Charcoal is used for body
+# text (never pure black). See STYLE.md Section 14 for full visual rules.
 COLORS = {
-    "primary": HexColor("#1a1a2e"),       # Deep navy
-    "accent": HexColor("#2563eb"),         # Ads blue
-    "highlight": HexColor("#f97316"),      # Bright orange
-    "success": HexColor("#22c55e"),        # Success green
-    "warning": HexColor("#eab308"),        # Warning amber
-    "danger": HexColor("#ef4444"),         # Danger red
-    "light_bg": HexColor("#f0f4f8"),
-    "text": HexColor("#1e293b"),
-    "text_light": HexColor("#64748b"),
-    "border": HexColor("#cbd5e1"),
+    "primary": HexColor("#119190"),        # Brand Teal — primary headers, CTAs
+    "accent": HexColor("#f85c1a"),         # Signal Orange — sparingly, for alerts
+    "highlight": HexColor("#f85c1a"),      # Signal Orange (same as accent)
+    "success": HexColor("#13c177"),        # Success Green
+    "warning": HexColor("#ffa577"),        # Light Orange — soft warnings
+    "danger": HexColor("#e20000"),         # Error Red
+    "light_bg": HexColor("#f5f5f5"),       # Mist Grey — section backgrounds
+    "text": HexColor("#222c2f"),           # Charcoal — body text
+    "text_light": HexColor("#64748b"),     # Muted helper text
+    "border": HexColor("#e3e3e3"),         # Line Grey — table lines, dividers
     "white": white,
     "black": black,
 }
 
 
 def score_color(score):
-    """Return color based on score value."""
+    """Return color based on score value, using the DD palette."""
     if score >= 80:
-        return COLORS["success"]
+        return COLORS["success"]       # Green — strong
     elif score >= 60:
-        return COLORS["accent"]
+        return COLORS["primary"]       # Teal — adequate/strong
     elif score >= 40:
-        return COLORS["warning"]
+        return COLORS["accent"]        # Orange — weak
     else:
-        return COLORS["danger"]
+        return COLORS["danger"]        # Red — critical
 
 
 def score_grade(score):
@@ -259,7 +263,7 @@ def generate_report(data, output_path):
     elements = []
 
     company = data.get("company_name", data.get("url", "Company"))
-    date_str = data.get("date", datetime.now().strftime("%B %d, %Y"))
+    date_str = data.get("date", datetime.now().strftime("%d/%m/%Y"))
     overall_score = data.get("overall_score", 0)
     grade = score_grade(overall_score)
 
@@ -267,14 +271,14 @@ def generate_report(data, output_path):
     # PAGE 1 — COVER
     # =====================================================================
     elements.append(Spacer(1, 1.2 * inch))
-    elements.append(Paragraph("AI Ads Strategy Report", S["title"]))
+    elements.append(Paragraph("Advertising Strategy Report", S["title"]))
     elements.append(Spacer(1, 40))
     elements.append(Paragraph(company, ParagraphStyle(
         "CompanyName", parent=S["subtitle"], fontSize=18,
         textColor=COLORS["accent"], spaceAfter=4
     )))
     elements.append(Spacer(1, 12))
-    elements.append(Paragraph(f"Generated: {date_str}", S["subtitle"]))
+    elements.append(Paragraph(f"Report date: {date_str}", S["subtitle"]))
     elements.append(Spacer(1, 50))
 
     # Score gauge
@@ -294,9 +298,11 @@ def generate_report(data, output_path):
 
     # Executive summary
     exec_summary = data.get("executive_summary",
-        "This report provides a comprehensive advertising strategy analysis covering "
-        "audience targeting, creative quality, funnel architecture, competitive positioning, "
-        "and budget allocation. Each dimension is scored and accompanied by actionable recommendations."
+        "This report covers the business's readiness to spend on paid advertising. "
+        "It looks at five areas: how well the audience is understood, the quality of "
+        "the ad copy and creative, how the campaigns are structured, the competitive "
+        "position, and how efficiently the budget is being spent. Each area is scored "
+        "and the report sets out what to do next."
     )
     elements.append(Paragraph(exec_summary, S["body"]))
 
@@ -329,13 +335,18 @@ def generate_report(data, output_path):
     elements.append(Spacer(1, 16))
 
     # Score breakdown table
-    score_data = [["Category", "Score", "Weight", "Status"]]
+    score_data = [["Category", "Score", "Weight", "Rating"]]
     for name, score in zip(cat_names, cat_scores):
         weight = categories[name].get("weight", "--") if isinstance(categories[name], dict) else "--"
-        if score >= 75:
+        # Five-band rating scale matching STYLE.md
+        if score >= 90:
+            status = "Excellent"
+        elif score >= 75:
             status = "Strong"
-        elif score >= 50:
-            status = "Needs Work"
+        elif score >= 60:
+            status = "Adequate"
+        elif score >= 40:
+            status = "Weak"
         else:
             status = "Critical"
         score_data.append([name, f"{int(score)}/100", weight, status])
@@ -353,9 +364,57 @@ def generate_report(data, output_path):
     elements.append(PageBreak())
 
     # =====================================================================
-    # PAGE 3 — AUDIENCE PERSONAS
+    # PAGE 3 — GLOSSARY
     # =====================================================================
-    elements.append(Paragraph("Audience Personas", S["heading"]))
+    # Every strategy report must include a glossary near the front. STYLE.md
+    # Section 5 makes this mandatory. Explains every acronym the reader might
+    # meet in the rest of the report.
+    elements.append(Paragraph("Glossary", S["heading"]))
+    elements.append(Spacer(1, 4))
+    elements.append(Paragraph(
+        "Plain-English explanations of the terms used in this report. "
+        "Skim it now and come back to it whenever a term trips you up.",
+        S["body"]
+    ))
+    elements.append(Spacer(1, 10))
+
+    glossary = data.get("glossary", [
+        ("ROAS (Return on Ad Spend)", "What you get back in sales for every rand spent on ads. A 4x ROAS means you spent R1.00 and earned R4.00."),
+        ("CPA (Cost Per Acquisition)", "What it costs in ads to win one paying customer."),
+        ("AOV (Average Order Value)", "The average basket size across the shop."),
+        ("LTV (Lifetime Value)", "What a customer is worth across all their purchases, not just the first."),
+        ("CPM", "Cost Per 1,000 Impressions. What it costs to show the ad to 1,000 people."),
+        ("CTR (Click Through Rate)", "The percentage of people who see the ad and click it."),
+        ("Funnel (TOFU / MOFU / BOFU)", "The path a shopper takes from never hearing of you to buying. Top (strangers), Middle (browsing), Bottom (ready to buy)."),
+        ("Retargeting", "Ads shown to people who already visited the site."),
+        ("Prospecting", "Ads shown to people who have never seen the brand before."),
+        ("Lookalike audience", "An audience Facebook or Google builds for you, based on your existing buyers."),
+        ("Performance Max (PMax)", "Google campaign that runs across Search, Shopping, YouTube and Gmail, automated."),
+        ("UGC", "User Generated Content. Content that looks like a customer made it, not a brand."),
+        ("Pixel / Conversions API (CAPI)", "Tracking code on the site. CAPI (server-side) is more accurate than the old browser pixel."),
+        ("BFCM", "Black Friday and Cyber Monday."),
+        ("BNPL", "Buy Now Pay Later (PayJustNow, PayFlex, Mobicred, Payshap)."),
+    ])
+
+    gloss_data = [["Term", "What it means"]]
+    for term, meaning in glossary:
+        gloss_data.append([
+            Paragraph(term, S["body_small"]),
+            Paragraph(meaning, S["body_small"]),
+        ])
+
+    gloss_table = Table(gloss_data, colWidths=[140, 360])
+    gloss_table.setStyle(standard_table_style([
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    ]))
+    elements.append(gloss_table)
+
+    elements.append(PageBreak())
+
+    # =====================================================================
+    # PAGE 4 — AUDIENCE PERSONAS
+    # =====================================================================
+    elements.append(Paragraph("Audience Analysis", S["heading"]))
     elements.append(Spacer(1, 6))
 
     personas = data.get("personas", [])
@@ -398,7 +457,7 @@ def generate_report(data, output_path):
 
     # Targeting recommendations
     elements.append(Spacer(1, 14))
-    elements.append(Paragraph("Targeting Recommendations", S["subheading"]))
+    elements.append(Paragraph("Targeting recommendations", S["subheading"]))
     recs = data.get("targeting_recommendations", [
         "Start with Lookalike audiences based on existing customers or email lists",
         "Layer interest-based targeting with demographic filters for precision",
@@ -411,45 +470,52 @@ def generate_report(data, output_path):
     elements.append(PageBreak())
 
     # =====================================================================
-    # PAGE 4 — CAMPAIGN STRUCTURE (Funnel Stages)
+    # PAGE 5 — CAMPAIGN ARCHITECTURE (renamed from Campaign Structure)
     # =====================================================================
-    elements.append(Paragraph("Campaign Structure", S["heading"]))
+    elements.append(Paragraph("Campaign Architecture", S["heading"]))
     elements.append(Spacer(1, 6))
+    elements.append(Paragraph(
+        "How the ad plan moves a shopper from first contact to purchase, "
+        "then back again for a second order. The budget is split across four "
+        "stages based on how far along the buying journey each audience is.",
+        S["body"]
+    ))
+    elements.append(Spacer(1, 10))
 
     funnel_stages = data.get("funnel_stages", [])
     if not funnel_stages:
         funnel_stages = [
             {
-                "stage": "TOFU (Awareness)",
-                "objective": "Brand awareness, reach, video views",
-                "budget_pct": "35%",
+                "stage": "Top (TOFU)",
+                "objective": "Awareness. Reach strangers who have never heard of the brand.",
+                "budget_pct": "25%",
                 "platforms": "Meta, YouTube, TikTok",
-                "ad_types": "Video ads, carousel, story ads",
-                "kpis": "CPM, VTR, Reach"
+                "ad_types": "Video, carousel, story ads",
+                "kpis": "Cost per 1,000 impressions, video view rate, reach"
             },
             {
-                "stage": "MOFU (Consideration)",
-                "objective": "Traffic, engagement, lead generation",
-                "budget_pct": "25%",
+                "stage": "Middle (MOFU)",
+                "objective": "Consideration. People who know the brand but have not bought yet.",
+                "budget_pct": "28%",
                 "platforms": "Meta, Google, LinkedIn",
-                "ad_types": "Lead forms, content ads, webinar promos",
-                "kpis": "CPC, CTR, CPL"
+                "ad_types": "Lead forms, content ads, landing-page traffic",
+                "kpis": "Cost per click, click-through rate, cost per lead"
             },
             {
-                "stage": "BOFU (Conversion)",
-                "objective": "Conversions, sales, sign-ups",
-                "budget_pct": "25%",
+                "stage": "Bottom (BOFU)",
+                "objective": "Conversion. Close the sale for people ready to buy.",
+                "budget_pct": "22%",
                 "platforms": "Google Search, Meta, LinkedIn",
-                "ad_types": "Search ads, dynamic product, testimonial",
-                "kpis": "CPA, ROAS, Conv Rate"
+                "ad_types": "Search ads, dynamic product ads, testimonial ads",
+                "kpis": "Cost per acquisition, return on ad spend, conversion rate"
             },
             {
                 "stage": "Retargeting",
-                "objective": "Re-engage, upsell, reduce churn",
-                "budget_pct": "15%",
+                "objective": "Recovery and loyalty. Bring back recent visitors and keep existing customers warm.",
+                "budget_pct": "25%",
                 "platforms": "Meta, Google Display, YouTube",
-                "ad_types": "Dynamic retargeting, abandoned cart, win-back",
-                "kpis": "ROAS, Frequency, CPA"
+                "ad_types": "Dynamic retargeting, cart-abandonment, win-back",
+                "kpis": "Return on ad spend, frequency, cost per acquisition"
             },
         ]
 
@@ -474,22 +540,29 @@ def generate_report(data, output_path):
 
     # Budget allocation summary
     elements.append(Spacer(1, 14))
-    elements.append(Paragraph("Budget Flow", S["subheading"]))
+    elements.append(Paragraph("Budget flow", S["subheading"]))
     elements.append(Paragraph(
-        "TOFU (35%) captures cold audiences with high-reach formats. "
-        "MOFU (25%) nurtures engaged prospects with educational content. "
-        "BOFU (25%) drives conversions with high-intent targeting. "
-        "Retargeting (15%) recaptures lost prospects and drives repeat purchases.",
+        "Top (25%) reaches strangers with high-reach formats. "
+        "Middle (28%) warms up people who know the brand but have not bought. "
+        "Bottom (22%) closes sales with high-intent targeting. "
+        "Retargeting (25%) brings back visitors and keeps customers loyal. "
+        "Fifty percent of the budget sits in Middle and Bottom combined, where the return is strongest.",
         S["body"]
     ))
 
     elements.append(PageBreak())
 
     # =====================================================================
-    # PAGE 5 — AD COPY SAMPLES
+    # PAGE 6 — CREATIVE DIRECTION (renamed from Ad Copy Samples)
     # =====================================================================
-    elements.append(Paragraph("Ad Copy Samples", S["heading"]))
+    elements.append(Paragraph("Creative Direction", S["heading"]))
     elements.append(Spacer(1, 6))
+    elements.append(Paragraph(
+        "Sample ad copy across the priority platforms. A hook is the first line "
+        "of the ad. If it does not stop the scroll, nothing else matters.",
+        S["body"]
+    ))
+    elements.append(Spacer(1, 10))
 
     ad_samples = data.get("ad_samples", [])
     if not ad_samples:
@@ -550,13 +623,20 @@ def generate_report(data, output_path):
     elements.append(PageBreak())
 
     # =====================================================================
-    # PAGE 6 — BUDGET & ROI PROJECTIONS
+    # PAGE 7 — BUDGET AND RETURN ON INVESTMENT
     # =====================================================================
-    elements.append(Paragraph("Budget & ROI Projections", S["heading"]))
+    elements.append(Paragraph("Budget and Return on Investment", S["heading"]))
     elements.append(Spacer(1, 6))
+    elements.append(Paragraph(
+        "Profitability depends on repeat custom, the email and WhatsApp list, "
+        "and Black Friday — not on cheaper clicks. The retention infrastructure "
+        "is where the economics actually work.",
+        S["body"]
+    ))
+    elements.append(Spacer(1, 10))
 
     # Budget allocation table (pie chart data as table)
-    elements.append(Paragraph("Budget Allocation by Platform", S["subheading"]))
+    elements.append(Paragraph("Budget allocation by platform", S["subheading"]))
 
     budget_alloc = data.get("budget_allocation", [])
     if not budget_alloc:
@@ -586,31 +666,31 @@ def generate_report(data, output_path):
     elements.append(Spacer(1, 20))
 
     # Projected metrics
-    elements.append(Paragraph("Projected Monthly Metrics", S["subheading"]))
+    elements.append(Paragraph("Projected monthly metrics", S["subheading"]))
 
     projections = data.get("projections", {})
     if not projections:
         projections = {
-            "total_budget": "$5,000/mo",
-            "impressions": "250,000 - 400,000",
-            "clicks": "3,500 - 6,000",
-            "ctr": "1.4% - 1.8%",
-            "conversions": "85 - 150",
-            "cpa": "$33 - $59",
-            "roas": "3.2x - 5.8x",
-            "revenue_estimate": "$16,000 - $29,000",
+            "total_budget": "R100,000.00 per month",
+            "impressions": "250,000 to 400,000",
+            "clicks": "3,500 to 6,000",
+            "ctr": "1.4% to 1.8%",
+            "conversions": "85 to 150",
+            "cpa": "R500.00 to R750.00",
+            "roas": "3.8x to 4.2x",
+            "revenue_estimate": "R380,000.00 to R420,000.00",
         }
 
-    proj_data = [["Metric", "Projected Range"]]
+    proj_data = [["Metric", "Projected range"]]
     metric_labels = {
-        "total_budget": "Total Monthly Budget",
-        "impressions": "Impressions",
+        "total_budget": "Total monthly budget",
+        "impressions": "Impressions (ad views)",
         "clicks": "Clicks",
-        "ctr": "Click-Through Rate (CTR)",
-        "conversions": "Conversions",
-        "cpa": "Cost Per Acquisition (CPA)",
-        "roas": "Return on Ad Spend (ROAS)",
-        "revenue_estimate": "Estimated Revenue",
+        "ctr": "Click-through rate",
+        "conversions": "Conversions (purchases)",
+        "cpa": "Cost per new customer",
+        "roas": "Return on ad spend",
+        "revenue_estimate": "Estimated revenue",
     }
     for key, label in metric_labels.items():
         value = projections.get(key, "--")
@@ -633,7 +713,7 @@ def generate_report(data, output_path):
 
     # Footer
     elements.append(Paragraph(
-        "Generated by AI Ads Strategist for Claude Code",
+        "Daily Discounts Advertising Strategy Report",
         S["footer"]
     ))
 
@@ -646,141 +726,140 @@ def generate_report(data, output_path):
 # Demo data
 # ---------------------------------------------------------------------------
 def get_demo_data():
-    """Return sample data for demo mode."""
+    """Return sample data for demo mode. Daily Discounts-style SA e-commerce."""
     return {
-        "company_name": "Acme Growth Co.",
-        "url": "https://acmegrowth.com",
-        "date": datetime.now().strftime("%B %d, %Y"),
-        "overall_score": 67,
+        "company_name": "Daily Discounts",
+        "url": "https://dailydiscounts.co.za",
+        "date": datetime.now().strftime("%d/%m/%Y"),
+        "overall_score": 78,
         "executive_summary": (
-            "Acme Growth Co. has a solid product offering but is underperforming across "
-            "key advertising dimensions. Audience targeting lacks precision, creative assets "
-            "need stronger hooks, and the funnel architecture has gaps between consideration "
-            "and conversion stages. This report outlines a complete ad strategy with platform-specific "
-            "recommendations, budget allocation, and projected ROI."
+            "Daily Discounts should start spending R100,000.00 a month on ads, but the "
+            "business cannot lean on the word 'discounts' to sell. The actual savings "
+            "sit between 2% and 14%, which is not deep enough to pull in the flash-deal "
+            "crowd. What the business offers is trusted brand names, free delivery, a "
+            "one-year warranty, and a real human to talk to when something goes wrong. "
+            "That is the story the ads must tell. A well-run programme should return "
+            "R3.80 to R4.20 in sales per R1.00 of ad spend within 90 days."
         ),
         "categories": {
-            "Audience Clarity": {"score": 72, "weight": "25%"},
-            "Creative Quality": {"score": 65, "weight": "20%"},
-            "Funnel Architecture": {"score": 58, "weight": "20%"},
-            "Competitive Position": {"score": 70, "weight": "15%"},
-            "Budget Efficiency": {"score": 62, "weight": "20%"},
+            "Audience clarity": {"score": 82, "weight": "25%"},
+            "Creative quality": {"score": 87, "weight": "20%"},
+            "Campaign architecture": {"score": 94, "weight": "20%"},
+            "Competitive position": {"score": 52, "weight": "15%"},
+            "Budget efficiency": {"score": 68, "weight": "20%"},
         },
         "personas": [
             {
-                "name": "Startup Sarah",
-                "demographics": "28-35, Female, Urban, $75K-$120K income",
-                "platforms": "Instagram, LinkedIn, YouTube",
-                "targeting": "Interest: SaaS, Startup, Entrepreneurship. Lookalike: Website visitors"
+                "name": "Thandi",
+                "demographics": "34 to 48, 70% female, household income R18,000.00 to R35,000.00, metros plus smaller towns",
+                "platforms": "Facebook 60%, Google Shopping 30%, TikTok 10%",
+                "targeting": "Interest: home appliances, bargain hunters, mid-tier brands. Lookalike from customer list."
             },
             {
-                "name": "Enterprise Eric",
-                "demographics": "40-55, Male, Suburban, $150K+ income",
-                "platforms": "LinkedIn, Google Search, YouTube",
-                "targeting": "Job Title: VP/Director/C-Suite. Industry: Technology, Finance"
+                "name": "Johan",
+                "demographics": "35 to 65, 65% male, household income R25,000.00 to R80,000.00, national with smaller-town skew",
+                "platforms": "Google Search 50%, Facebook 40%, TikTok 10%",
+                "targeting": "Keywords: inverter, generator, load-shedding backup. Bid-up during Stage 4+."
             },
             {
-                "name": "Freelancer Fiona",
-                "demographics": "25-38, Any gender, Urban/Remote, $45K-$80K income",
-                "platforms": "Instagram, TikTok, Facebook Groups",
-                "targeting": "Interest: Freelancing, Side Hustle, Productivity tools"
+                "name": "Megan",
+                "demographics": "30 to 50, 60% female, household income R60,000.00 to R150,000.00, Sandton, Constantia, Umhlanga",
+                "platforms": "Facebook and Instagram 60%, Google PMax 30%, Pinterest 10%",
+                "targeting": "Interest: home decor, kitchen appliances, premium brands. Lookalike from high-AOV buyers."
             },
         ],
         "targeting_recommendations": [
-            "Start with Lookalike audiences based on existing customers or email lists",
-            "Layer interest-based targeting with demographic filters for precision",
-            "Use retargeting pools segmented by funnel stage (visited vs. engaged vs. converted)",
-            "Test broad vs. narrow audiences — let platform algorithms optimize delivery",
+            "Start with Lookalike audiences built from the existing customer list",
+            "Layer interest targeting with demographic filters for precision",
+            "Use retargeting segmented by funnel stage: visited, engaged, cart-added, purchased",
+            "Test broad versus narrow audiences and let the platforms optimise delivery",
         ],
         "funnel_stages": [
             {
-                "stage": "TOFU (Awareness)",
-                "objective": "Brand awareness, reach, video views",
-                "budget_pct": "35%",
+                "stage": "Top (TOFU)",
+                "objective": "Awareness. Reach strangers who have never heard of the brand.",
+                "budget_pct": "25%",
                 "platforms": "Meta, YouTube, TikTok",
-                "ad_types": "Video ads, carousel, story ads",
-                "kpis": "CPM, VTR, Reach"
+                "ad_types": "Video, carousel, story ads",
+                "kpis": "Cost per 1,000 impressions, video view rate, reach"
             },
             {
-                "stage": "MOFU (Consideration)",
-                "objective": "Traffic, engagement, lead generation",
-                "budget_pct": "25%",
+                "stage": "Middle (MOFU)",
+                "objective": "Consideration. People who know the brand but have not bought yet.",
+                "budget_pct": "28%",
                 "platforms": "Meta, Google, LinkedIn",
-                "ad_types": "Lead forms, content ads, webinar promos",
-                "kpis": "CPC, CTR, CPL"
+                "ad_types": "Lead forms, content ads, landing-page traffic",
+                "kpis": "Cost per click, click-through rate, cost per lead"
             },
             {
-                "stage": "BOFU (Conversion)",
-                "objective": "Conversions, sales, sign-ups",
-                "budget_pct": "25%",
-                "platforms": "Google Search, Meta, LinkedIn",
-                "ad_types": "Search ads, dynamic product, testimonial",
-                "kpis": "CPA, ROAS, Conv Rate"
+                "stage": "Bottom (BOFU)",
+                "objective": "Conversion. Close the sale for people ready to buy.",
+                "budget_pct": "22%",
+                "platforms": "Google Search, Meta",
+                "ad_types": "Search ads, dynamic product ads, testimonial ads",
+                "kpis": "Cost per acquisition, return on ad spend, conversion rate"
             },
             {
                 "stage": "Retargeting",
-                "objective": "Re-engage, upsell, reduce churn",
-                "budget_pct": "15%",
+                "objective": "Recovery and loyalty. Bring back recent visitors.",
+                "budget_pct": "25%",
                 "platforms": "Meta, Google Display, YouTube",
-                "ad_types": "Dynamic retargeting, abandoned cart, win-back",
-                "kpis": "ROAS, Frequency, CPA"
+                "ad_types": "Dynamic retargeting, cart-abandonment, win-back",
+                "kpis": "Return on ad spend, frequency, cost per acquisition"
             },
         ],
         "ad_samples": [
             {
                 "platform": "Meta (Facebook)",
-                "headline": "Stop Wasting Ad Spend",
-                "primary_text": "87% of small businesses lose money on ads because they skip strategy. Get a free AI-powered ad audit and find out where your budget is leaking.",
-                "cta": "Get Free Audit"
+                "headline": "Still paying Takealot prices in 2026?",
+                "primary_text": "The same Bosch, Defy and Midea appliances you know, 14% cheaper. Free delivery. One-year warranty.",
+                "cta": "Shop Now"
             },
             {
                 "platform": "Google Search",
-                "headline": "AI Ad Strategy Tool | Free Audit",
-                "primary_text": "See exactly where your ad budget is going wrong. AI-powered analysis across 5 dimensions. Results in 60 seconds.",
-                "cta": "Start Free Audit"
+                "headline": "Buy fridge online SA",
+                "primary_text": "Trusted brands at everyday savings. Free delivery across South Africa. One-year warranty.",
+                "cta": "View Deals"
             },
             {
-                "platform": "LinkedIn",
-                "headline": "Your Competitors Are Outspending You",
-                "primary_text": "We analyzed 1,000+ ad accounts. The top performers all share 5 traits. Find out if your campaigns measure up.",
-                "cta": "Get Your Score"
+                "platform": "Instagram Reels",
+                "headline": "Load-shedding broke your kettle?",
+                "primary_text": "Replace it for under R500.00. Free delivery. Trusted brands only.",
+                "cta": "Shop Kettles"
             },
             {
                 "platform": "Instagram Story",
-                "headline": "Is Your Ad Budget Working?",
-                "primary_text": "Swipe up to get your free Ad Readiness Score. AI analyzes your audience, creative, funnel, and budget in under 60 seconds.",
-                "cta": "Swipe Up"
+                "headline": "Fridge died?",
+                "primary_text": "You have got 24 hours before the meat spoils. Same-day delivery in Gauteng, next-day nationally.",
+                "cta": "Browse Fridges"
             },
             {
                 "platform": "YouTube Pre-Roll",
-                "headline": "The #1 Reason Ads Fail",
-                "primary_text": "It's not your budget. It's not your creative. It's your targeting. Watch how AI fixes ad targeting in 60 seconds.",
+                "headline": "The appliance brands Makro sells, 14% cheaper.",
+                "primary_text": "Same Bosch. Same Defy. Same Midea. Better price. Question the markup.",
                 "cta": "Learn More"
             },
             {
                 "platform": "TikTok",
-                "headline": "POV: Your ads finally work",
-                "primary_text": "I ran this AI tool on my ad account and it found $2,300/mo in wasted spend. Here's exactly what it flagged.",
-                "cta": "Try It Free"
+                "headline": "POV: Your 55-inch TV came on budget",
+                "primary_text": "Only 8 Telefunken 55s left at last month's price. Gone Friday. Free delivery.",
+                "cta": "Grab Yours"
             },
         ],
         "budget_allocation": [
-            {"platform": "Meta (Facebook/Instagram)", "allocation": "35%", "monthly": "$1,750"},
-            {"platform": "Google Ads (Search + Display)", "allocation": "30%", "monthly": "$1,500"},
-            {"platform": "YouTube Ads", "allocation": "15%", "monthly": "$750"},
-            {"platform": "LinkedIn Ads", "allocation": "10%", "monthly": "$500"},
-            {"platform": "TikTok Ads", "allocation": "5%", "monthly": "$250"},
-            {"platform": "Pinterest Ads", "allocation": "5%", "monthly": "$250"},
+            {"platform": "Google (Shopping + Performance Max + Search)", "allocation": "65%", "monthly": "R65,000.00"},
+            {"platform": "Facebook / Instagram (Advantage+, retargeting, prospecting)", "allocation": "25%", "monthly": "R25,000.00"},
+            {"platform": "TikTok (creator-led tests)", "allocation": "10%", "monthly": "R10,000.00"},
         ],
         "projections": {
-            "total_budget": "$5,000/mo",
-            "impressions": "250,000 - 400,000",
-            "clicks": "3,500 - 6,000",
-            "ctr": "1.4% - 1.8%",
-            "conversions": "85 - 150",
-            "cpa": "$33 - $59",
-            "roas": "3.2x - 5.8x",
-            "revenue_estimate": "$16,000 - $29,000",
+            "total_budget": "R100,000.00 per month",
+            "impressions": "1,200,000 to 1,800,000",
+            "clicks": "18,000 to 26,000",
+            "ctr": "1.4% to 1.8%",
+            "conversions": "130 to 200",
+            "cpa": "R500.00 to R750.00",
+            "roas": "3.8x to 4.2x",
+            "revenue_estimate": "R380,000.00 to R420,000.00",
         },
     }
 
